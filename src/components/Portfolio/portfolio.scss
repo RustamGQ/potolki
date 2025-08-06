@@ -1,0 +1,373 @@
+.portfolio {
+    padding: rem(100px) 0;
+    background: linear-gradient(135deg, 
+        rgba(189, 216, 255, 0.9) 0%, 
+        rgba(190, 211, 255, 0.8) 100%);
+    position: relative;
+    overflow: hidden;
+
+    // Декоративные элементы фона
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba($blue-color, 0.08), transparent);
+        border-radius: 50%;
+        z-index: 0;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -40%;
+        left: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba($accent-color, 0.06), transparent);
+        border-radius: 50%;
+        z-index: 0;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    // Заголовок секции
+    &__header {
+        text-align: center;
+        margin-bottom: rem(80px);
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: rem(8px);
+        background: rgba($blue-color, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba($blue-color, 0.2);
+        border-radius: rem(50px);
+        padding: rem(10px) rem(20px);
+        margin-bottom: rem(24px);
+        @include smooth-transition;
+
+        &:hover {
+            background: rgba($blue-color, 0.15);
+            transform: translateY(-2px);
+        }
+    }
+
+    &__badge-text {
+        font-size: rem(14px);
+        font-weight: 600;
+        color: $blue-color;
+    }
+
+    &__badge-icon {
+        font-size: rem(16px);
+        animation: gentle-bounce 2s ease-in-out infinite;
+    }
+
+    &__title {
+        font-size: rem(48px);
+        font-weight: 900;
+        color: $text-color;
+        margin-bottom: rem(20px);
+        line-height: 1.2;
+
+        @media (max-width: 768px) {
+            font-size: rem(36px);
+        }
+    }
+
+    &__title-accent {
+        background: linear-gradient(135deg, $blue-color, $accent-color);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, $blue-color, $accent-color);
+            border-radius: rem(2px);
+            opacity: 0.3;
+        }
+    }
+
+    &__subtitle {
+        font-size: rem(18px);
+        color: $text-secondary;
+        max-width: rem(600px);
+        margin: 0 auto;
+        line-height: 1.6;
+
+        @media (max-width: 768px) {
+            font-size: rem(16px);
+        }
+    }
+
+    // CTA секция
+    &__cta {
+        text-align: center;
+        background: linear-gradient(135deg, 
+            rgba($blue-color, 0.20), 
+            rgba(#1539b1, 0.07));
+        border: 1px solid rgba($blue-color, 0.1);
+        border-radius: rem(32px);
+        padding: rem(60px) rem(40px);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        margin-top: rem(60px);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.05), 
+                transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+    }
+
+    &__cta-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    &__cta-title {
+        font-size: rem(32px);
+        font-weight: 800;
+        color: $text-color;
+        margin-bottom: rem(16px);
+
+        @media (max-width: 768px) {
+            font-size: rem(24px);
+        }
+    }
+
+    &__cta-text {
+        font-size: rem(18px);
+        color: $text-secondary;
+        margin-bottom: rem(40px);
+        max-width: rem(500px);
+        margin-left: auto;
+        margin-right: auto;
+
+        @media (max-width: 768px) {
+            font-size: rem(16px);
+        }
+    }
+
+    &__cta-actions {
+        display: flex;
+        gap: rem(20px);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    &__cta-btn {
+        padding: rem(16px) rem(32px);
+        border-radius: rem(50px);
+        font-size: rem(16px);
+        font-weight: 600;
+        cursor: pointer;
+        @include smooth-transition;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            @include smooth-transition;
+        }
+
+        &:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        &--primary {
+            background: linear-gradient(135deg, $blue-color, #1e40af);
+            color: white;
+            border: 2px solid transparent;
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba($blue-color, 0.4);
+            }
+        }
+
+        &--secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: $blue-color;
+            border: 2px solid rgba($blue-color, 0.3);
+            backdrop-filter: blur(10px);
+
+            &:hover {
+                background: rgba(255, 255, 255, 1);
+                border-color: $blue-color;
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            padding: rem(14px) rem(24px);
+            font-size: rem(14px);
+        }
+    }
+}
+
+// Оригинальная 3D Карусель (точно как на сайте atuin.ru)
+.carousel-3d {
+    padding: 20px;
+    -webkit-perspective: 500px;
+    perspective: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: rem(40px);
+
+    > * {
+        flex: 0 0 auto;
+    }
+
+    figure {
+        margin: 0;
+        width: 50%;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        transition: -webkit-transform 0.5s;
+        transition: transform 0.5s;
+        transition: transform 0.5s, -webkit-transform 0.5s;
+        position: relative;
+    }
+
+    figure img,
+    figure div {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+        display: block;
+    }
+
+    figure img {
+        user-select: none;
+        vertical-align: bottom; // убираем gap под изображениями
+        max-width: 100%;
+        height: auto;
+    }
+
+    figure div:not(:first-of-type),
+    figure img:not(:first-of-type) {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    // Добавляем backface-visibility для оптимизации
+    figure div {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0 0;
+    }
+
+    nav button {
+        flex: 0 0 auto;
+        margin: 0 5px;
+        cursor: pointer;
+        color: $blue-color;
+        background: rgba($blue-color, 0.1);
+        border: 1px solid $blue-color;
+        padding: 5px 10px;
+        font-weight: bold;
+        transition: all .3s ease;
+        border-radius: rem(4px);
+
+        &:hover {
+            color: white;
+            background: $blue-color;
+        }
+    }
+
+    // Адаптивность
+    @media (max-width: 768px) {
+        figure {
+            width: 70%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        figure {
+            width: 90%;
+        }
+    }
+}
+
+// Дополнительные анимации
+@keyframes gentle-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+    .portfolio {
+        padding: rem(60px) 0;
+
+        &__header {
+            margin-bottom: rem(50px);
+        }
+
+        &__title {
+            font-size: rem(28px);
+        }
+
+        &__cta {
+            padding: rem(40px) rem(20px);
+        }
+
+        &__cta-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &__cta-btn {
+            width: 100%;
+            max-width: rem(280px);
+        }
+    }
+}
