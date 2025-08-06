@@ -1,0 +1,190 @@
+.header {
+    &__top {
+        padding: rem(16px) 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        // Анимация для SVG логотипа
+        &-logo {
+            @include smooth-transition;
+            
+            svg {
+                transition: transform $transition-normal;
+                
+                &:hover {
+                    transform: scale(1.05);
+                    
+                    // Анимация волн в логотипе
+                    path {
+                        animation: pulse 2s ease-in-out infinite;
+                    }
+                }
+            }
+        }
+        &-menu {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        &-link {
+            color: $text-color;
+            font-size: rem(15px);
+            @include smooth-transition;
+            position: relative;
+            text-decoration: none;
+            
+            // Красивое подчеркивание
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, $blue-color, #60a5fa);
+                transition: width $transition-normal;
+            }
+            
+            &:hover {
+                @include link-hover;
+                text-shadow: 0 2px 8px rgba($blue-color, 0.3);
+                
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+        &-geo {
+            font-size: rem(16px);
+        }
+    }
+}
+
+.container-header {
+    border-bottom: 1px solid $blue-color;
+}
+
+.header__bottom {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-logo {
+        display: flex;
+        align-items: center;
+        font-size: rem(20px);
+        gap: 10px;
+        margin-bottom: 10px;
+        @include smooth-transition;
+        text-decoration: none;
+        
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+    
+    &-box {
+        display: flex;
+        flex-direction: column;
+    }
+    &-phone {
+        font-size: rem(19px);
+        font-weight: 700;
+        color: #2b2b2b;
+    }
+    &-consultation {
+        font-size: rem(13px);
+        color: $text-color;
+    }
+    &-work {
+        font-size: rem(14px);
+        font-weight: 300;
+    }
+    &-center {
+        display: flex;
+        align-items: center;
+        gap: rem(40px);
+        margin-left: rem(30px);
+    }
+    &-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @include smooth-transition;
+        
+        &:hover {
+            transform: translateY(-3px);
+            
+            .header__bottom-title {
+                color: darken($blue-color, 10%);
+                transform: scale(1.1);
+            }
+        }
+    }
+    &-title {
+        font-size: rem(21px);
+        color: $blue-color;
+        font-weight: 800;
+        @include smooth-transition;
+    }
+    &-text {
+        font-size: rem(11px);
+        font-weight: 400;
+    }
+    &-right {
+        display: flex;
+        flex-direction: column;
+        gap: rem(10px);
+    }
+    &-boxe {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: rem(10px);
+    }
+    &-link {
+        text-decoration: none;
+        @include smooth-transition;
+        cursor: pointer;
+
+        &--bg {
+            background-color: $blue-color;
+            padding: 15px 17px;
+            color: #d1dfff;
+            border-radius: 10px;
+            font-size: rem(14px);
+            font-weight: 500;
+            
+            &:hover {
+                @include button-hover;
+                background-color: darken($blue-color, 10%);
+            }
+        }
+        
+        &--border {
+            padding: 13px 15px;
+            border: 2px solid $blue-color;
+            border-radius: 10px;
+            font-size: rem(14px);
+            font-weight: 500;
+            color: $blue-color;
+            background-color: transparent;
+            
+            &:hover {
+                background-color: $blue-color;
+                color: white;
+                @include button-hover;
+            }
+        }
+    }
+    &-info {
+        font-size: rem(12px);
+        font-weight: 600;
+        color: #22c42a;
+        background-color: #45f74e10;
+        border: 1px solid #0aaa12;
+        padding: 3px 4px;
+        border-radius: 4px;
+    }
+}
