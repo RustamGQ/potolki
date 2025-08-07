@@ -195,6 +195,19 @@ function Portfolio() {
 
     return (
         <section className="portfolio" id="portfolio">
+            {/* Декоративный фон */}
+            <div className="portfolio__bg">
+                <div className="portfolio__floating-circles">
+                    <div className="portfolio__circle portfolio__circle--1"></div>
+                    <div className="portfolio__circle portfolio__circle--2"></div>
+                    <div className="portfolio__circle portfolio__circle--3"></div>
+                </div>
+                <div className="portfolio__geometric-shapes">
+                    <div className="portfolio__shape portfolio__shape--triangle"></div>
+                    <div className="portfolio__shape portfolio__shape--square"></div>
+                </div>
+            </div>
+
             <div className="container">
                 {/* Заголовок секции */}
                 <div className="portfolio__header">
@@ -209,10 +222,51 @@ function Portfolio() {
                         Более 1000 довольных клиентов по всему Ростову-на-Дону. 
                         Каждый проект - это уникальное решение с гарантией качества.
                     </p>
+
+                    {/* Статистика достижений */}
+                    <div className="portfolio__stats">
+                        <div className="portfolio__stat-item">
+                            <div className="portfolio__stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </div>
+                            <div className="portfolio__stat-content">
+                                <span className="portfolio__stat-number">1000+</span>
+                                <span className="portfolio__stat-label">Проектов</span>
+                            </div>
+                        </div>
+
+                        <div className="portfolio__stat-item">
+                            <div className="portfolio__stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </div>
+                            <div className="portfolio__stat-content">
+                                <span className="portfolio__stat-number">15</span>
+                                <span className="portfolio__stat-label">Лет гарантии</span>
+                            </div>
+                        </div>
+
+                        <div className="portfolio__stat-item">
+                            <div className="portfolio__stat-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </div>
+                            <div className="portfolio__stat-content">
+                                <span className="portfolio__stat-number">1-3</span>
+                                <span className="portfolio__stat-label">Дня монтажа</span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 {/* Оригинальная 3D Карусель */}
-                <div className="carousel-3d" data-gap="40" ref={carouselRef}>
+                <div className="carousel-3d" data-gap="0" ref={carouselRef}>
                     <figure>
                         {portfolioData.map((item) => (
                             <div key={item.id}>
@@ -230,6 +284,50 @@ function Portfolio() {
                             Вперед
                         </button>
                     </nav>
+                </div>
+
+                {/* Информационная панель */}
+                <div className="portfolio__info-panel">
+                    <div className="portfolio__info-grid">
+                        <div className="portfolio__info-card">
+                            <div className="portfolio__info-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" strokeWidth="2"/>
+                                </svg>
+                            </div>
+                            <h4 className="portfolio__info-title">Премиум качество</h4>
+                            <p className="portfolio__info-text">
+                                Используем только сертифицированные материалы от ведущих европейских производителей
+                            </p>
+                        </div>
+
+                        <div className="portfolio__info-card">
+                            <div className="portfolio__info-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                                    <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2"/>
+                                </svg>
+                            </div>
+                            <h4 className="portfolio__info-title">Быстрый монтаж</h4>
+                            <p className="portfolio__info-text">
+                                Установка любой сложности за 1-3 дня без пыли и строительного мусора
+                            </p>
+                        </div>
+
+                        <div className="portfolio__info-card">
+                            <div className="portfolio__info-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" strokeWidth="2"/>
+                                </svg>
+                            </div>
+                            <h4 className="portfolio__info-title">Гарантия 15 лет</h4>
+                            <p className="portfolio__info-text">
+                                Расширенная гарантия на все виды работ и материалы с бесплатным сервисом
+                            </p>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 {/* CTA секция */}
