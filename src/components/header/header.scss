@@ -1,9 +1,24 @@
 .header {
+    &--stuck {
+        .header__top-fixed {
+            backdrop-filter: saturate(160%) blur(4px);
+            background-color: rgba(255, 255, 255, 0.425);
+            border-bottom-color: rgba($blue-color, 0.4);
+        }
+        .header__top-item--extra {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+
     &__top {
         padding: rem(16px) 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        white-space: nowrap;
+        min-height: rem(60px);
         
         // Анимация для SVG логотипа
         &-logo {
@@ -61,8 +76,22 @@
     }
 }
 
-.container-header {
+.header__top-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: saturate(140%) blur(0px);
     border-bottom: 1px solid $blue-color;
+    max-width: 1440px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Spacer so content doesn't jump when top is fixed */
+.header {
+    padding-top: var(--header-top-h, 0px);
 }
 
 .header__bottom {
@@ -70,6 +99,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: rem(80px);
     &-logo {
         display: flex;
         align-items: center;
@@ -187,4 +217,55 @@
         padding: 3px 4px;
         border-radius: 4px;
     }
+}
+
+/* Extra header links hidden by default to avoid layout shift */
+.header__top-item--extra {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity $transition-normal, visibility $transition-normal;
+}
+
+/* Burger + mobile menu */
+.header__burger {
+  display: none;
+  width: 38px; height: 28px; position: relative; border: 0; background: transparent; padding: 0; cursor: pointer;
+  span { position: absolute; left: 0; right: 0; height: 3px; background: #0f172a; border-radius: 2px; transition: transform .25s, top .25s, opacity .25s; }
+  span:nth-child(1){ top: 4px; }
+  span:nth-child(2){ top: 12px; }
+  span:nth-child(3){ top: 20px; }
+  &.is-open span:nth-child(1){ top: 12px; transform: rotate(45deg); }
+  &.is-open span:nth-child(2){ opacity: 0; }
+  &.is-open span:nth-child(3){ top: 12px; transform: rotate(-45deg); }
+}
+
+.header__mobile { display: none; }
+.header__mobile.is-open { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 999; }
+.header__mobile-panel { position: absolute; top: var(--header-top-h, 60px); right: 10px; left: 10px; background: #ffffff; border: 1px solid rgba($blue-color,.2); border-radius: 14px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+.header__mobile-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.header__mobile-list a { text-decoration: none; color: #0f172a; font-weight: 700; display: block; padding: 12px 10px; border-radius: 10px; }
+.header__mobile-list a:hover { background: #f1f5f9; }
+.header__mobile-call { color: $blue-color !important; border: 2px solid rgba($blue-color,.25); text-align: center; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .header__top-menu { gap: 22px; }
+  .header__bottom-center { gap: rem(20px); margin-left: 0; }
+}
+
+@media (max-width: 768px) {
+  .header__top-nav { display: none; }
+  .header__top-geo { display: none; }
+  .header__burger { display: inline-block; }
+  .header__bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .header__bottom-right { width: 100%; }
+  .header__bottom-boxe { justify-content: flex-start; flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .header__bottom-title { font-size: rem(18px); }
+  .header__bottom-text { font-size: rem(10px); }
+  .header__bottom-phone { font-size: rem(17px); }
+  .header__bottom-link--bg, .header__bottom-link--border { padding: 12px 14px; font-size: rem(13px); }
 }

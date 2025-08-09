@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Roboto } from 'next/font/google';
+import Header from "../components/header/header";
 import "./globals.scss";
 
 const inter = Inter({
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${roboto.variable}`}>
       <body className={inter.className}>
+        <Header />
         {children}
       </body>
     </html>

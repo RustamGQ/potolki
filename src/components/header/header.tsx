@@ -1,11 +1,61 @@
+"use client";
 import './header.scss';
+import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react';
 
 function Header() {
+    const [isStuck, setIsStuck] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const topRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        let ticking = false;
+
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.scrollY > 8;
+                    setIsStuck(prev => (prev !== scrolled ? scrolled : prev));
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        // Initialize state based on initial scroll
+        handleScroll();
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        const updateTopHeightVar = () => {
+            const topEl = topRef.current;
+            if (!topEl) return;
+            const height = topEl.offsetHeight;
+            // Apply to the header element to scope the spacing locally
+            topEl.parentElement?.style.setProperty('--header-top-h', `${height}px`);
+        };
+
+        updateTopHeightVar();
+        const ro = new ResizeObserver(updateTopHeightVar);
+        if (topRef.current) ro.observe(topRef.current);
+        window.addEventListener('resize', updateTopHeightVar);
+        return () => {
+            ro.disconnect();
+            window.removeEventListener('resize', updateTopHeightVar);
+        };
+    }, []);
+
     return (
-        <header className="header">
-            <div className="container container-header">
-                <div className="header__top">
-                    <a href="!#" className="header__top-logo">
+        <header className={`header ${isStuck ? 'header--stuck' : ''}`}>
+            <div ref={topRef} className="header__top-fixed">
+                <div className="container container-header">
+                    <div className="header__top">
+                    <Link href="/" className="header__top-logo">
                         <svg width="160" height="28" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                             {/* Изысканные волны */}
                             <path d="M1 20 Q11 10 19 15 T37 13 T49 17" stroke="url(#waveGradient)" strokeWidth="2.2" fill="none"/>
@@ -77,27 +127,42 @@ function Header() {
                                 </linearGradient>
                             </defs>
                         </svg>
-                    </a>
+                    </Link>
                     <nav className='header__top-nav'>
                         <ul className="header__top-menu">
                             <li className="header__top-item">
-                                <a href="!#" className="header__top-link">
+                                <Link href="/about" className="header__top-link">
                                     О компании
-                                </a>
+                                </Link>
                             </li>
                             <li className="header__top-item">
-                                <a href="!#" className="header__top-link">
+                                <Link href="/services" className="header__top-link">
                                     Услуги
-                                </a>
+                                </Link>
                             </li>
                             <li className="header__top-item">
-                                <a href="!#" className="header__top-link">
+                                <Link href="/calculator" className="header__top-link">
                                     Калькулятор цен
-                                </a>
+                                </Link>
                             </li>
                             <li className="header__top-item">
                                 <a href="!#" className="header__top-link">
                                     Контакты
+                                </a>
+                            </li>
+                            <li className="header__top-item header__top-item--extra">
+                                <a href="!#" className="header__top-link">
+                                    Наши работы
+                                </a>
+                            </li>
+                            <li className="header__top-item header__top-item--extra">
+                                <a href="!#" className="header__top-link">
+                                    Отзывы
+                                </a>
+                            </li>
+                            <li className="header__top-item header__top-item--extra">
+                                <a href="!#" className="header__top-link">
+                                    Позвонить
                                 </a>
                             </li>
                         </ul>
@@ -105,6 +170,31 @@ function Header() {
                     <p className="header__top-geo">
                     📍 Ростов-на-Дону и область
                     </p>
+                    <button
+                        className={`header__burger ${isMobileMenuOpen ? 'is-open' : ''}`}
+                        aria-label="Открыть меню"
+                        aria-expanded={isMobileMenuOpen}
+                        onClick={() => setIsMobileMenuOpen(v => !v)}
+                    >
+                        <span />
+                        <span />
+                        <span />
+                    </button>
+                    </div>
+                </div>
+            </div>
+            {/* Mobile menu */}
+            <div className={`header__mobile ${isMobileMenuOpen ? 'is-open' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
+                <div className="header__mobile-panel" onClick={(e) => e.stopPropagation()}>
+                    <ul className="header__mobile-list">
+                        <li><Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>О компании</Link></li>
+                        <li><Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>Услуги</Link></li>
+                        <li><Link href="/calculator" onClick={() => setIsMobileMenuOpen(false)}>Калькулятор цен</Link></li>
+                        <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Контакты</a></li>
+                        <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Наши работы</a></li>
+                        <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Отзывы</a></li>
+                        <li><a href="tel:+79180000000" className="header__mobile-call" onClick={() => setIsMobileMenuOpen(false)}>Позвонить</a></li>
+                    </ul>
                 </div>
             </div>
             <div className="container">
