@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  sassOptions: {
-    additionalData: `@use "src/styles/_variables.scss" as *;`,
-  },
+  output: 'export',
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  sassOptions: {
+    additionalData: `@use "src/styles/_variables.scss" as *;`,
   },
 };
 
