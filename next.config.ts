@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   sassOptions: {
-    prependData: `@import "src/styles/_variables.scss";`,
+    additionalData: `@import "src/styles/_variables.scss";`,
   },
 };
 
