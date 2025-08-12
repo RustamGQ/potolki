@@ -1,21 +1,38 @@
 import { Metadata } from 'next';
-import { getCityBySlug } from '../../../../lib/cities';
-import { getProductById } from '../../../../lib/catalog';
+import { getCityBySlug, cities } from '../../../../lib/cities';
+import { getProductById, getCatalogData } from '../../../../lib/catalog';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import './productPage.scss';
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     city: string;
     productId: string;
-  };
+  }>;
+}
+
+export async function generateStaticParams() {
+  const catalogData = getCatalogData();
+  const params: Array<{ city: string; productId: string }> = [];
+  
+  cities.forEach(city => {
+    catalogData.products.forEach(product => {
+      params.push({
+        city: city.slug,
+        productId: product.id
+      });
+    });
+  });
+  
+  return params;
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const city = getCityBySlug(params.city);
-  const product = getProductById(params.productId);
+  const { city: citySlug, productId } = await params;
+  const city = getCityBySlug(citySlug);
+  const product = getProductById(productId);
   
   if (!city || !product) {
     return {
@@ -48,9 +65,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   };
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const city = getCityBySlug(params.city);
-  const product = getProductById(params.productId);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { city: citySlug, productId } = await params;
+  const city = getCityBySlug(citySlug);
+  const product = getProductById(productId);
   
   if (!city || !product) {
     notFound();

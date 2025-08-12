@@ -6,9 +6,6 @@ export const metadata: Metadata = {
   description: 'Запрашиваемая страница не существует',
 };
 
-// Отключаем предварительный рендеринг для страницы 404
-export const dynamic = 'force-dynamic';
-
 export default function NotFound() {
   return (
     <div style={{ 

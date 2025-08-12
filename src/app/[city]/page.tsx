@@ -1,12 +1,14 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { getCityBySlug, cities } from '../../lib/cities';
-import Hero from "../../components/Hero/Hero";
-import Portfolio from "../../components/Portfolio/Portfolio";
-import About from "../../components/About/About";
-import Services from "../../components/Services/Services";
-import WorkZone from "../../components/WorkZone/WorkZone";
-import Footer from "../../components/Footer/Footer";
+import { notFound } from 'next/navigation';
+import Hero from '../../components/Hero/Hero';
+import About from '../../components/About/About';
+import Services from '../../components/Services/Services';
+import Portfolio from '../../components/Portfolio/Portfolio';
+import Calculator from '../../components/Calculator/Calculator';
+import WorkZone from '../../components/WorkZone/WorkZone';
+import Footer from '../../components/Footer/Footer';
+import JsonLdWrapper from '../../components/JsonLd/JsonLdWrapper';
 import "../../styles/reset.css";
 
 interface CityPageProps {
@@ -27,24 +29,24 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   
   if (!city) {
     return {
-      title: 'Страница не найдена',
-      description: 'Запрашиваемая страница не существует',
+      title: 'Натяжные потолки - ПОТОЛКИ',
+      description: 'Профессиональная установка натяжных потолков. Качественные материалы, опытные мастера, гарантия на работы.'
     };
   }
 
   return {
-    title: city.seoTitle,
-    description: city.seoDescription,
-    keywords: `натяжные потолки ${city.name.toLowerCase()}, потолки ${city.name.toLowerCase()}, установка потолков ${city.name.toLowerCase()}, монтаж потолков ${city.name.toLowerCase()}`,
+    title: `Натяжные потолки в ${city.name} - цены от 1200₽/м² | ПОТОЛКИ`,
+    description: `Натяжные потолки в ${city.name}. Профессиональная установка, качественные материалы, опытные мастера. Цены от 1200₽/м². Бесплатный замер, гарантия качества.`,
+    keywords: `натяжные потолки ${city.name}, потолки ${city.name}, установка потолков ${city.name}, матовые потолки, глянцевые потолки, сатиновые потолки`,
     openGraph: {
-      title: city.seoTitle,
-      description: city.seoDescription,
+      title: `Натяжные потолки в ${city.name} - ПОТОЛКИ`,
+      description: `Профессиональная установка натяжных потолков в ${city.name}. Цены от 1200₽/м².`,
       type: 'website',
-      locale: 'ru_RU',
+      locale: 'ru_RU'
     },
     alternates: {
-      canonical: `https://yourdomain.com/${city.slug}`,
-    },
+      canonical: `https://potolki.ru/${city.slug}`
+    }
   };
 }
 

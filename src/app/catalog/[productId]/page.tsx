@@ -1,18 +1,27 @@
 import { Metadata } from 'next';
-import { getProductById } from '../../../lib/catalog';
+import { getProductById, getCatalogData } from '../../../lib/catalog';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import './productPage.scss';
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     productId: string;
-  };
+  }>;
+}
+
+export async function generateStaticParams() {
+  const catalogData = getCatalogData();
+  
+  return catalogData.products.map(product => ({
+    productId: product.id
+  }));
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const product = getProductById(params.productId);
+  const { productId } = await params;
+  const product = getProductById(productId);
   
   if (!product) {
     return {
@@ -45,8 +54,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   };
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const product = getProductById(params.productId);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { productId } = await params;
+  const product = getProductById(productId);
   
   if (!product) {
     notFound();

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function DistantCitiesPage() {
   return (
-    <CityProvider initialCitySlug="rostov">
+    <CityProvider>
       <div className="distant-cities-notice">
         <div className="container">
           <div className="distant-cities-notice__content">

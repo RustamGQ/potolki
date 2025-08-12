@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   sassOptions: {
-    additionalData: `@import "src/styles/_variables.scss";`,
+    additionalData: `@use "src/styles/_variables.scss" as *;`,
   },
 };
 

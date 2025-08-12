@@ -1,24 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { CatalogFilter, CatalogData } from '../../types/catalog';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { getCatalogData } from '../../lib/catalog';
+import { CatalogFilter, CatalogData, TextureType, CeilingType, RoomType, Manufacturer, ServiceType } from '../../types/catalog';
 import CatalogFilters from './CatalogFilters';
 import CatalogProductCard from './CatalogProductCard';
 import './catalog.scss';
 
 interface CatalogProps {
   citySlug?: string;
-  initialData?: CatalogData;
 }
 
-export default function Catalog({ citySlug, initialData }: CatalogProps) {
-  const router = useRouter();
-  const pathname = usePathname();
+function CatalogContent({ citySlug }: CatalogProps) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   
-  const [catalogData, setCatalogData] = useState<CatalogData>(initialData || getCatalogData());
+  const [catalogData, setCatalogData] = useState<CatalogData>(() => getCatalogData());
   const [currentFilter, setCurrentFilter] = useState<CatalogFilter>({
     textures: [],
     types: [],
@@ -33,11 +32,11 @@ export default function Catalog({ citySlug, initialData }: CatalogProps) {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     const newFilter: CatalogFilter = {
-      textures: params.get('textures')?.split(',').filter(Boolean) || [],
-      types: params.get('types')?.split(',').filter(Boolean) || [],
-      rooms: params.get('rooms')?.split(',').filter(Boolean) || [],
-      manufacturers: params.get('manufacturers')?.split(',').filter(Boolean) || [],
-      services: params.get('services')?.split(',').filter(Boolean) || [],
+      textures: (params.get('textures')?.split(',').filter(Boolean) || []) as TextureType[],
+      types: (params.get('types')?.split(',').filter(Boolean) || []) as CeilingType[],
+      rooms: (params.get('rooms')?.split(',').filter(Boolean) || []) as RoomType[],
+      manufacturers: (params.get('manufacturers')?.split(',').filter(Boolean) || []) as Manufacturer[],
+      services: (params.get('services')?.split(',').filter(Boolean) || []) as ServiceType[],
       priceRange: [
         parseInt(params.get('minPrice') || '0'),
         parseInt(params.get('maxPrice') || '10000')
@@ -127,22 +126,8 @@ export default function Catalog({ citySlug, initialData }: CatalogProps) {
             </div>
           ) : catalogData.products.length === 0 ? (
             <div className="catalog-empty">
-              <div className="empty-icon">🔍</div>
-              <h3>Товары не найдены</h3>
+              <p>Товары не найдены</p>
               <p>Попробуйте изменить параметры фильтрации</p>
-              <button 
-                className="reset-filters-btn"
-                onClick={() => handleFilterChange({
-                  textures: [],
-                  types: [],
-                  rooms: [],
-                  manufacturers: [],
-                  services: [],
-                  priceRange: [0, 10000]
-                })}
-              >
-                Сбросить фильтры
-              </button>
             </div>
           ) : (
             <div className="catalog-grid">
@@ -158,5 +143,20 @@ export default function Catalog({ citySlug, initialData }: CatalogProps) {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function Catalog(props: CatalogProps) {
+  return (
+    <Suspense fallback={
+      <div className="catalog">
+        <div className="catalog-loading">
+          <div className="loading-spinner"></div>
+          <p>Загрузка каталога...</p>
+        </div>
+      </div>
+    }>
+      <CatalogContent {...props} />
+    </Suspense>
   );
 }

@@ -1,34 +1,40 @@
 import { Metadata } from 'next';
-import { getCityBySlug } from '../../../lib/cities';
-import { getCatalogData } from '../../../lib/catalog';
-import Catalog from '../../../components/Catalog/Catalog';
+import { getCityBySlug, cities } from '../../../lib/cities';
 import { notFound } from 'next/navigation';
+import Catalog from '../../../components/Catalog/Catalog';
 
 interface CatalogPageProps {
-  params: {
+  params: Promise<{
     city: string;
-  };
+  }>;
+}
+
+export async function generateStaticParams() {
+  return cities.map((city) => ({
+    city: city.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: CatalogPageProps): Promise<Metadata> {
-  const city = getCityBySlug(params.city);
+  const { city: citySlug } = await params;
+  const city = getCityBySlug(citySlug);
   
   if (!city) {
     return {
       title: 'Каталог натяжных потолков - ПОТОЛКИ',
-      description: 'Каталог натяжных потолков с фильтрацией по типам, текстурам и помещениям. Выберите подходящий потолок для вашего интерьера.'
+      description: 'Каталог натяжных потолков с ценами и характеристиками. Выберите подходящий потолок для вашего помещения.'
     };
   }
 
   return {
-    title: `Каталог натяжных потолков в ${city.name} - Цены от 1200₽/м² | ПОТОЛКИ`,
-    description: `Каталог натяжных потолков в ${city.name}. Матовые, глянцевые, сатиновые потолки с фотопечатью и подсветкой. Цены от 1200₽/м². Бесплатный замер, гарантия качества.`,
-    keywords: `каталог натяжных потолков ${city.name}, потолки ${city.name}, матовые потолки, глянцевые потолки, сатиновые потолки, потолки с подсветкой, звездное небо, фотопечать на потолке`,
+    title: `Каталог натяжных потолков в ${city.name} - цены от производителя`,
+    description: `Каталог натяжных потолков в ${city.name} с ценами и характеристиками. Выберите подходящий потолок для вашего помещения.`,
+    keywords: `каталог натяжных потолков ${city.name}, потолки ${city.name}, натяжные потолки каталог ${city.name}`,
     openGraph: {
       title: `Каталог натяжных потолков в ${city.name} - ПОТОЛКИ`,
-      description: `Каталог натяжных потолков в ${city.name}. Выберите подходящий потолок для вашего интерьера. Цены от 1200₽/м².`,
+      description: `Каталог натяжных потолков в ${city.name} с ценами и характеристиками.`,
       type: 'website',
-      locale: 'ru_RU',
+      locale: 'ru_RU'
     },
     alternates: {
       canonical: `https://potolki.ru/${city.slug}/catalog`
@@ -36,20 +42,18 @@ export async function generateMetadata({ params }: CatalogPageProps): Promise<Me
   };
 }
 
-export default function CatalogPage({ params }: CatalogPageProps) {
-  const city = getCityBySlug(params.city);
+export default async function CatalogPage({ params }: CatalogPageProps) {
+  const { city: citySlug } = await params;
+  const city = getCityBySlug(citySlug);
   
   if (!city) {
     notFound();
   }
 
-  const initialData = getCatalogData();
-
   return (
     <main>
       <Catalog 
         citySlug={city.slug}
-        initialData={initialData}
       />
     </main>
   );

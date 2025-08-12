@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CatalogFilter, FilterOption } from '../../types/catalog';
+import { CatalogFilter, FilterOption, TextureType, CeilingType, RoomType, Manufacturer, ServiceType } from '../../types/catalog';
 import './catalogFilters.scss';
 
 interface CatalogFiltersProps {
@@ -36,19 +36,64 @@ export default function CatalogFilters({
     }));
   };
 
-  const handleFilterChange = (
-    filterType: keyof Omit<CatalogFilter, 'priceRange'>,
-    value: string,
-    checked: boolean
-  ) => {
+  const handleFilterChange = (filterType: string, value: string | number) => {
     const newFilter = { ...currentFilter };
     
-    if (checked) {
-      newFilter[filterType] = [...newFilter[filterType], value as any];
-    } else {
-      newFilter[filterType] = newFilter[filterType].filter(item => item !== value);
+    if (filterType === 'textures' && typeof value === 'string') {
+      if (newFilter.textures.includes(value as TextureType)) {
+        newFilter.textures = newFilter.textures.filter(item => item !== value);
+      } else {
+        newFilter.textures = [...newFilter.textures, value as TextureType];
+      }
+    } else if (filterType === 'types' && typeof value === 'string') {
+      if (newFilter.types.includes(value as CeilingType)) {
+        newFilter.types = newFilter.types.filter(item => item !== value);
+      } else {
+        newFilter.types = [...newFilter.types, value as CeilingType];
+      }
+    } else if (filterType === 'rooms' && typeof value === 'string') {
+      if (newFilter.rooms.includes(value as RoomType)) {
+        newFilter.rooms = newFilter.rooms.filter(item => item !== value);
+      } else {
+        newFilter.rooms = [...newFilter.rooms, value as RoomType];
+      }
+    } else if (filterType === 'manufacturers' && typeof value === 'string') {
+      if (newFilter.manufacturers.includes(value as Manufacturer)) {
+        newFilter.manufacturers = newFilter.manufacturers.filter(item => item !== value);
+      } else {
+        newFilter.manufacturers = [...newFilter.manufacturers, value as Manufacturer];
+      }
+    } else if (filterType === 'services' && typeof value === 'string') {
+      if (newFilter.services.includes(value as ServiceType)) {
+        newFilter.services = newFilter.services.filter(item => item !== value);
+      } else {
+        newFilter.services = [...newFilter.services, value as ServiceType];
+      }
     }
     
+    onFilterChange(newFilter);
+  };
+
+  const isOptionChecked = (filterType: string, value: string): boolean => {
+    switch (filterType) {
+      case 'textures':
+        return currentFilter.textures.includes(value as TextureType);
+      case 'types':
+        return currentFilter.types.includes(value as CeilingType);
+      case 'rooms':
+        return currentFilter.rooms.includes(value as RoomType);
+      case 'manufacturers':
+        return currentFilter.manufacturers.includes(value as Manufacturer);
+      case 'services':
+        return currentFilter.services.includes(value as ServiceType);
+      default:
+        return false;
+    }
+  };
+
+  const handlePriceChange = (min: number, max: number) => {
+    const newFilter = { ...currentFilter };
+    newFilter.priceRange = [min, max];
     onFilterChange(newFilter);
   };
 
@@ -97,8 +142,8 @@ export default function CatalogFilters({
               <label key={option.value} className="filter-option">
                 <input
                   type="checkbox"
-                  checked={currentFilter[filterType].includes(option.value as any)}
-                  onChange={(e) => handleFilterChange(filterType, option.value, e.target.checked)}
+                  checked={isOptionChecked(filterType, option.value)}
+                  onChange={(e) => handleFilterChange(filterType, option.value)}
                 />
                 <span className="filter-option-label">{option.label}</span>
                 <span className="filter-option-count">({option.count})</span>
@@ -140,7 +185,7 @@ export default function CatalogFilters({
               <span key={texture} className="active-filter-tag">
                 {filters.textures.find(f => f.value === texture)?.label}
                 <button
-                  onClick={() => handleFilterChange('textures', texture, false)}
+                  onClick={() => handleFilterChange('textures', texture)}
                   className="remove-filter-btn"
                 >
                   ×
@@ -151,7 +196,7 @@ export default function CatalogFilters({
               <span key={type} className="active-filter-tag">
                 {filters.types.find(f => f.value === type)?.label}
                 <button
-                  onClick={() => handleFilterChange('types', type, false)}
+                  onClick={() => handleFilterChange('types', type)}
                   className="remove-filter-btn"
                 >
                   ×
@@ -162,7 +207,7 @@ export default function CatalogFilters({
               <span key={room} className="active-filter-tag">
                 {filters.rooms.find(f => f.value === room)?.label}
                 <button
-                  onClick={() => handleFilterChange('rooms', room, false)}
+                  onClick={() => handleFilterChange('rooms', room)}
                   className="remove-filter-btn"
                 >
                   ×
@@ -173,7 +218,7 @@ export default function CatalogFilters({
               <span key={manufacturer} className="active-filter-tag">
                 {filters.manufacturers.find(f => f.value === manufacturer)?.label}
                 <button
-                  onClick={() => handleFilterChange('manufacturers', manufacturer, false)}
+                  onClick={() => handleFilterChange('manufacturers', manufacturer)}
                   className="remove-filter-btn"
                 >
                   ×
@@ -184,7 +229,7 @@ export default function CatalogFilters({
               <span key={service} className="active-filter-tag">
                 {filters.services.find(f => f.value === service)?.label}
                 <button
-                  onClick={() => handleFilterChange('services', service, false)}
+                  onClick={() => handleFilterChange('services', service)}
                   className="remove-filter-btn"
                 >
                   ×
