@@ -7,7 +7,7 @@ $font-roboto: var(--font-roboto);
 $font-arial: Arial, Helvetica, sans-serif;
 
 @function rem($px) {
-  @return ($px / $font-size-base) * 1rem;
+  @return ($px / 16px) * 1rem;
 }
 
 // Transition Variables

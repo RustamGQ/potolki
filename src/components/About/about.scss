@@ -1,591 +1,201 @@
 .about {
-    padding: rem(120px) 0;
-    background: linear-gradient(135deg, 
-        rgba(240, 248, 255, 0.95) 0%, 
-        rgba(224, 231, 255, 0.9) 50%,
-        rgba(199, 210, 254, 0.85) 100%);
+    padding: 120px 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     position: relative;
     overflow: hidden;
-
-    // Декоративные элементы
+    
     &::before {
         content: '';
         position: absolute;
-        top: 10%;
-        right: -5%;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba($blue-color, 0.08), transparent);
-        border-radius: 50%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e2e8f0" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
         z-index: 0;
-        animation: gentle-float 6s ease-in-out infinite;
     }
-
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 15%;
-        left: -8%;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba($accent-color, 0.06), transparent);
-        border-radius: 50%;
-        z-index: 0;
-        animation: gentle-float 8s ease-in-out infinite reverse;
-    }
-
+    
     .container {
         position: relative;
         z-index: 1;
-        // Container base styles are in globals.scss
     }
-
-    // Анимированный фон
-    &__bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    &__floating-circles {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-
-    &__circle {
-        position: absolute;
-        border-radius: 50%;
-        background: linear-gradient(135deg, 
-            rgba($blue-color, 0.1), 
-            rgba($accent-color, 0.05));
-        backdrop-filter: blur(10px);
-        animation: circle-float 15s ease-in-out infinite;
-
-        &--1 {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        &--2 {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 5s;
-        }
-
-        &--3 {
-            width: 60px;
-            height: 60px;
-            bottom: 30%;
-            left: 20%;
-            animation-delay: 10s;
-        }
-    }
-
-    &__geometric-shapes {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-
-    &__shape {
-        position: absolute;
-        background: linear-gradient(45deg, 
-            rgba($blue-color, 0.08), 
-            rgba($accent-color, 0.04));
-        backdrop-filter: blur(8px);
-        animation: shape-rotate 20s linear infinite;
-
-        &--triangle {
-            width: 40px;
-            height: 40px;
-            top: 25%;
-            right: 20%;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation-delay: 0s;
-        }
-
-        &--square {
-            width: 35px;
-            height: 35px;
-            bottom: 40%;
-            right: 10%;
-            border-radius: rem(8px);
-            animation-delay: 7s;
-        }
-    }
-
-    // Заголовок секции
-    &__header {
-        text-align: center;
-        margin-bottom: rem(80px);
-    }
-
-    &__badge {
-        display: inline-flex;
-        align-items: center;
-        gap: rem(8px);
-        background: rgba($blue-color, 0.12);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba($blue-color, 0.2);
-        border-radius: rem(50px);
-        padding: rem(12px) rem(24px);
-        margin-bottom: rem(24px);
-        @include smooth-transition;
-
-        &:hover {
-            background: rgba($blue-color, 0.18);
-            transform: translateY(-2px);
-            box-shadow: 0 rem(8px) rem(25px) rgba($blue-color, 0.15);
-        }
-    }
-
-    &__badge-text {
-        font-size: rem(14px);
-        font-weight: 600;
-        color: $blue-color;
-    }
-
-    &__badge-icon {
-        font-size: rem(16px);
-        animation: gentle-bounce 2s ease-in-out infinite;
-    }
-
+    
     &__title {
-        font-size: rem(52px);
-        font-weight: 900;
-        color: $text-color;
-        margin-bottom: rem(24px);
-        line-height: 1.2;
-
-        @media (max-width: 768px) {
-            font-size: rem(40px);
-        }
-    }
-
-    &__title-accent {
-        background: linear-gradient(135deg, $blue-color, $accent-color);
-        background-clip: text;
+        font-size: 48px;
+        font-weight: 800;
+        color: #0f172a;
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, $blue-color, #60a5fa);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        position: relative;
-
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(135deg, $blue-color, $accent-color);
-            border-radius: rem(2px);
-            opacity: 0.4;
-        }
-    }
-
-    &__subtitle {
-        font-size: rem(20px);
-        color: $text-secondary;
-        max-width: rem(700px);
-        margin: 0 auto;
-        line-height: 1.6;
-
+        background-clip: text;
+        
         @media (max-width: 768px) {
-            font-size: rem(18px);
+            font-size: 36px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 28px;
         }
     }
-
-    // Основной контент
+    
+    &__subtitle {
+        font-size: 20px;
+        color: $text-secondary;
+        text-align: center;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        
+        @media (max-width: 768px) {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+    }
+    
     &__content {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: rem(80px);
-        margin-bottom: rem(80px);
-
+        gap: 80px;
+        align-items: center;
+        
         @media (max-width: 1024px) {
+            gap: 60px;
+        }
+        
+        @media (max-width: 768px) {
             grid-template-columns: 1fr;
-            gap: rem(60px);
+            gap: 40px;
         }
     }
-
-    // Статистика
-    &__stats {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: rem(20px);
-        margin-bottom: rem(50px);
-
-        @media (max-width: 480px) {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    &__stat-card {
-        text-align: center;
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba($blue-color, 0.1);
-        border-radius: rem(20px);
-        padding: rem(30px) rem(20px);
-        @include smooth-transition;
-
-        &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 rem(15px) rem(40px) rgba($blue-color, 0.12);
-            background: rgba(255, 255, 255, 0.9);
-        }
-    }
-
-    &__stat-number {
-        font-size: rem(36px);
-        font-weight: 900;
-        color: $blue-color;
-        margin-bottom: rem(8px);
-        line-height: 1;
-    }
-
-    &__stat-label {
-        font-size: rem(14px);
-        color: $text-secondary;
-        font-weight: 500;
-    }
-
-    // Описание компании
-    &__description {
-        &-title {
-            font-size: rem(28px);
+    
+    &__text {
+        h3 {
+            font-size: 32px;
             font-weight: 700;
-            color: $text-color;
-            margin-bottom: rem(30px);
-        }
-    }
-
-    &__features {
-        display: flex;
-        flex-direction: column;
-        gap: rem(25px);
-    }
-
-    &__feature {
-        display: flex;
-        align-items: flex-start;
-        gap: rem(20px);
-        padding: rem(25px);
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba($blue-color, 0.08);
-        border-radius: rem(16px);
-        @include smooth-transition;
-
-        &:hover {
-            transform: translateX(rem(5px));
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 rem(10px) rem(30px) rgba($blue-color, 0.1);
-        }
-
-        &-icon {
-            font-size: rem(24px);
-            flex-shrink: 0;
-            width: rem(45px);
-            height: rem(45px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, $blue-color, $accent-color);
-            border-radius: rem(12px);
-            color: white;
-        }
-
-        &-title {
-            font-size: rem(18px);
-            font-weight: 600;
-            color: $text-color;
-            margin-bottom: rem(8px);
-        }
-
-        &-text {
-            font-size: rem(15px);
-            color: $text-secondary;
-            line-height: 1.6;
-        }
-    }
-
-    // Команда
-    &__team {
-        margin-bottom: rem(50px);
-
-        &-title {
-            font-size: rem(28px);
-            font-weight: 700;
-            color: $text-color;
-            margin-bottom: rem(30px);
-            text-align: center;
-        }
-
-        &-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: rem(20px);
-
+            color: #0f172a;
+            margin-bottom: 24px;
+            
             @media (max-width: 768px) {
-                grid-template-columns: 1fr;
+                font-size: 28px;
             }
         }
-
-        &-member {
-            display: flex;
-            align-items: center;
-            gap: rem(15px);
-            padding: rem(20px);
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba($blue-color, 0.1);
-            border-radius: rem(16px);
-            @include smooth-transition;
-
-            &:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 rem(12px) rem(25px) rgba($blue-color, 0.1);
-                background: rgba(255, 255, 255, 0.9);
+        
+        p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: $text-color;
+            margin-bottom: 20px;
+            
+            @media (max-width: 768px) {
+                font-size: 16px;
+            }
+        }
+        
+        ul {
+            list-style: none;
+            margin: 24px 0;
+            
+            li {
+                position: relative;
+                padding-left: 32px;
+                margin-bottom: 16px;
+                font-size: 16px;
+                color: $text-color;
+                
+                &::before {
+                    content: '✓';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 20px;
+                    height: 20px;
+                    background: $blue-color;
+                    color: white;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
             }
         }
     }
-
-    &__member-avatar {
-        width: rem(60px);
-        height: rem(60px);
-        border-radius: 50%;
-        overflow: hidden;
-        flex-shrink: 0;
-        border: 2px solid rgba($blue-color, 0.2);
-
+    
+    &__image {
+        position: relative;
+        
         img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
-
-    &__member-name {
-        font-size: rem(16px);
-        font-weight: 600;
-        color: $text-color;
-        margin-bottom: rem(4px);
-    }
-
-    &__member-role {
-        font-size: rem(14px);
-        color: $text-secondary;
-    }
-
-    // Сертификаты
-    &__certificates {
-        &-title {
-            font-size: rem(28px);
-            font-weight: 700;
-            color: $text-color;
-            margin-bottom: rem(30px);
-            text-align: center;
-        }
-
-        &-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: rem(20px);
-
-            @media (max-width: 768px) {
-                grid-template-columns: 1fr;
-            }
-        }
-    }
-
-    &__certificate {
-        display: flex;
-        align-items: center;
-        gap: rem(15px);
-        padding: rem(20px);
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba($blue-color, 0.1);
-        border-radius: rem(16px);
-        @include smooth-transition;
-
-        &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 rem(12px) rem(25px) rgba($blue-color, 0.1);
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        &-icon {
-            font-size: rem(24px);
-            width: rem(45px);
-            height: rem(45px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, $accent-color, $blue-color);
-            border-radius: rem(12px);
-            flex-shrink: 0;
-        }
-
-        &-text {
-            h4 {
-                font-size: rem(16px);
-                font-weight: 600;
-                color: $text-color;
-                margin-bottom: rem(4px);
-            }
-
-            p {
-                font-size: rem(14px);
-                color: $text-secondary;
-            }
-        }
-    }
-
-    // CTA секция
-    &__cta {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: rem(50px);
-        align-items: center;
-        background: linear-gradient(135deg, 
-            rgba($blue-color, 0.08), 
-            rgba($accent-color, 0.05));
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba($blue-color, 0.15);
-        border-radius: rem(24px);
-        padding: rem(50px);
-
-        @media (max-width: 1024px) {
-            grid-template-columns: 1fr;
-            gap: rem(40px);
-            text-align: center;
-        }
-
-        &-title {
-            font-size: rem(32px);
-            font-weight: 800;
-            color: $text-color;
-            margin-bottom: rem(16px);
-            line-height: 1.3;
-
-            @media (max-width: 768px) {
-                font-size: rem(28px);
-            }
-        }
-
-        &-text {
-            font-size: rem(18px);
-            color: $text-secondary;
-            margin-bottom: rem(30px);
-            line-height: 1.6;
-        }
-
-        &-actions {
-            display: flex;
-            gap: rem(16px);
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
             
-            @media (max-width: 480px) {
-                flex-direction: column;
+            &:hover {
+                transform: scale(1.05);
             }
         }
-
-        &-btn {
-            padding: rem(16px) rem(32px);
-            border-radius: rem(12px);
-            font-weight: 600;
-            font-size: rem(16px);
-            border: none;
-            cursor: pointer;
-            @include smooth-transition;
-
-            &--primary {
-                background: linear-gradient(135deg, $blue-color, #1539b1);
-                color: white;
-
-                &:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 rem(8px) rem(25px) rgba($blue-color, 0.3);
-                    background: linear-gradient(135deg, #1539b1, $blue-color);
-                }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            background: linear-gradient(135deg, $blue-color, #60a5fa);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+    }
+    
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        margin-top: 80px;
+        
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             }
-
-            &--secondary {
-                background: rgba(255, 255, 255, 0.9);
+            
+            .number {
+                font-size: 48px;
+                font-weight: 800;
                 color: $blue-color;
-                border: 1px solid rgba($blue-color, 0.2);
-
-                &:hover {
-                    background: white;
-                    transform: translateY(-2px);
-                    box-shadow: 0 rem(8px) rem(25px) rgba($blue-color, 0.15);
+                margin-bottom: 10px;
+                
+                @media (max-width: 768px) {
+                    font-size: 36px;
                 }
+            }
+            
+            .label {
+                font-size: 16px;
+                color: $text-secondary;
+                font-weight: 500;
             }
         }
     }
-
-    &__cta-contact {
-        display: flex;
-        flex-direction: column;
-        gap: rem(20px);
-    }
-
-    &__contact-item {
-        display: flex;
-        flex-direction: column;
-        gap: rem(4px);
-    }
-
-    &__contact-label {
-        font-size: rem(14px);
-        font-weight: 600;
-        color: $text-secondary;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    &__contact-value {
-        font-size: rem(16px);
-        font-weight: 500;
-        color: $text-color;
-        text-decoration: none;
-        @include smooth-transition;
-
-        &:hover {
-            color: $blue-color;
-        }
-    }
-}
-
-// Анимации
-@keyframes gentle-float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-@keyframes circle-float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -30px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-}
-
-@keyframes shape-rotate {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.2); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes gentle-bounce {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
 }
