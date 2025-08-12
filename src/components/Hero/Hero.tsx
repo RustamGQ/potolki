@@ -2,6 +2,7 @@
 import './hero.scss';
 import React from 'react';
 import CalcMini from '../CalcMini/CalcMini';
+import { useCity } from '../../contexts/CityContext';
 
 type RoomType = 'living' | 'bedroom' | 'kitchen';
 type CeilingType = 'matte' | 'glossy' | 'printed';
@@ -14,12 +15,7 @@ const ROOM_PRESETS: Record<RoomType, { label: string; defaultArea: number; icon:
   kitchen: { label: 'Кухня', defaultArea: 12, icon: '🍳' },
 };
 
-// Фото комнат (добавь свои изображения в public/images/rooms/...)
-const ROOM_PHOTOS: Record<RoomType, string> = {
-    living: '/images/rooms/living.jpg',
-    bedroom: '/images/rooms/bedroom.jpg',
-    kitchen: '/images/rooms/kitchen.jpg',
-};
+
 
 const BASE_RATE_PER_M2 = 400; // ₽/м² базовая цена для матового
 const CEILING_MULTIPLIER: Record<CeilingType, number> = {
@@ -47,6 +43,7 @@ function formatPriceRub(value: number): string {
 }
 
 function Hero() {
+  const { currentCity } = useCity();
   const [room, setRoom] = React.useState<RoomType>('living');
   const [area, setArea] = React.useState<number>(ROOM_PRESETS['living'].defaultArea);
   const [ceilingType, setCeilingType] = React.useState<CeilingType>('matte');
@@ -166,8 +163,8 @@ function Hero() {
             <div className="hero__metric-card">
               <div className="hero__metric-icon">📈</div>
               <div className="hero__metric-content">
-                <div className="hero__metric-number">2847</div>
-                <div className="hero__metric-label">Установок в 2024</div>
+                <div className="hero__metric-number">427+</div>
+                <div className="hero__metric-label">Установок в 2025</div>
               </div>
               <div className="hero__metric-trend">+24%</div>
             </div>
@@ -182,10 +179,10 @@ function Hero() {
             <div className="hero__metric-card">
               <div className="hero__metric-icon">⚡</div>
               <div className="hero__metric-content">
-                <div className="hero__metric-number">3 часа</div>
+                <div className="hero__metric-number">от 3 часа</div>
                 <div className="hero__metric-label">Время установки</div>
               </div>
-              <div className="hero__metric-trend">Без пыли</div>
+              <div className="hero__metric-trend">Чистый монтаж</div>
             </div>
           </div>
 
@@ -198,9 +195,9 @@ function Hero() {
               </div>
 
               <h1 className="hero__title">
-                <span className="hero__title-line">Потолки нового</span>
-                <span className="hero__title-line hero__title-line--highlight">поколения</span>
-                <span className="hero__title-sub">Превосходящие все ожидания</span>
+                <span className="hero__title-line">Натяжные потолки в {currentCity.namePrepositional}</span>
+                <span className="hero__title-line hero__title-line--highlight">от 1200₽/м²</span>
+                <span className="hero__title-sub">Бесплатный замер • Монтаж за день • Гарантия 3 года</span>
               </h1>
 
               <div className="hero__value-props">
@@ -221,8 +218,8 @@ function Hero() {
                 <div className="hero__value-prop">
                   <div className="hero__prop-number">03</div>
                   <div className="hero__prop-content">
-                    <h3>Пожизненная гарантия</h3>
-                    <p>Уверенность в качестве на всю жизнь</p>
+                    <h3>Гарантия от производителя 15 лет</h3>
+                    <p>Уверенность в качестве</p>
                   </div>
                 </div>
               </div>

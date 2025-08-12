@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { City } from '../../types/city';
 import "./calculator.scss";
 
 type CeilingMaterial = "matte" | "glossy" | "satin" | "fabric";
@@ -19,10 +20,10 @@ type CalculatorState = {
 };
 
 const MATERIAL_PRICE_PER_M2: Record<CeilingMaterial, number> = {
-  matte: 450,
-  glossy: 520,
-  satin: 560,
-  fabric: 900,
+  matte: 405, // BAUF 205 матовый (175 + 230)
+  glossy: 415, // BAUF 205 глянцевый (185 + 230)
+  satin: 405, // BAUF 205 сатиновый (175 + 230)
+  fabric: 880, // LumFer фактурный (650 + 230)
 };
 
 const ADD_ON_PRICES = {
@@ -33,14 +34,18 @@ const ADD_ON_PRICES = {
   pipeCutoutPerUnit: 350,
   extraCornerPerUnit: 120,
   printPerM2: 900,
-  minOrder: 6500,
+  minOrder: 7500,
 };
 
 function formatRub(amount: number): string {
   return new Intl.NumberFormat("ru-RU").format(amount);
 }
 
-export default function Calculator(): React.ReactElement {
+interface CalculatorProps {
+  city?: City;
+}
+
+export default function Calculator({ city }: CalculatorProps): React.ReactElement {
   const [state, setState] = React.useState<CalculatorState>({
     roomLengthM: "4.0",
     roomWidthM: "3.0",
@@ -131,8 +136,8 @@ export default function Calculator(): React.ReactElement {
         <div className="calc__wrap">
           <div className="calc__left">
             <header className="calc__header">
-              <h1 className="calc__title">Калькулятор натяжных потолков</h1>
-              <p className="calc__sub">Точный предварительный расчёт с учётом всех опций</p>
+              <h1 className="calc__title">Калькулятор натяжных потолков {city ? `в ${city.name}` : ''}</h1>
+              <p className="calc__sub">Точный предварительный расчёт с учётом всех опций {city ? `для ${city.nameGenitive}` : ''}</p>
             </header>
 
             <div className="calc__grid">

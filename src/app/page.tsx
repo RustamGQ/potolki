@@ -1,18 +1,6 @@
-import Hero from "../components/Hero/Hero";
-import Portfolio from "../components/Portfolio/Portfolio";
-import About from "../components/About/About";
-import Services from "../components/Services/Services";
-import Footer from "../components/Footer/Footer";
-import "../styles/reset.css";
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <Portfolio />
-      <About />
-      <Services />
-      <Footer />
-    </>
-  );
+  // Перенаправляем с главной страницы на страницу Ростова
+  redirect('/rostov');
 }

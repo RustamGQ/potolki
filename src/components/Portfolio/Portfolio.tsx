@@ -1,90 +1,72 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useCity } from '../../contexts/CityContext';
 import './portfolio.scss';
 
-// Данные портфолио
-const portfolioData = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-        alt: "Натяжной потолок в гостиной - Ростов-на-Дону"
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
-        alt: "Двухуровневый потолок в спальне - Ростов-на-Дону"
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-        alt: "Натяжной потолок на кухне - Ростов-на-Дону"
-    },
-    {
-        id: 4,
-        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
-        alt: "Потолок звездное небо - Ростов-на-Дону"
-    },
-    {
-        id: 5,
-        image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=300&fit=crop",
-        alt: "Черный глянцевый потолок - Ростов-на-Дону"
-    },
-    {
-        id: 6,
-        image: "https://images.unsplash.com/photo-1605276373954-0c4a0dac5851?w=400&h=300&fit=crop",
-        alt: "Фотопечать на потолке - Ростов-на-Дону"
-    },
-    {
-        id: 7,
-        image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&h=300&fit=crop",
-        alt: "Многоуровневый потолок в детской - Ростов-на-Дону"
-    },
-    {
-        id: 8,
-        image: "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=400&h=300&fit=crop",
-        alt: "Матовый белый потолок в ванной - Ростов-на-Дону"
-    },
-    {
-        id: 9,
-        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
-        alt: "Зеркальный потолок в прихожей - Ростов-на-Дону"
-    },
-    {
-        id: 10,
-        image: "https://images.unsplash.com/photo-1615875605825-5eb9bb5d52ac?w=400&h=300&fit=crop",
-        alt: "Цветной натяжной потолок в кафе - Ростов-на-Дону"
-    }
-];
-
 function Portfolio() {
+    const { currentCity } = useCity();
+    
+    // Динамические данные портфолио в зависимости от города
+    const portfolioData = [
+        {
+            id: 1,
+            image: "/img/work-1.webp",
+            alt: `Натяжной потолок в гостиной - ${currentCity.name}`
+        },
+        {
+            id: 2,
+            image: "/img/work-2.webp",
+            alt: `Двухуровневый потолок в спальне - ${currentCity.name}`
+        },
+        {
+            id: 3,
+            image: "/img/work-3.webp",
+            alt: `Натяжной потолок на кухне - ${currentCity.name}`
+        },
+        {
+            id: 4,
+            image: "/img/work-4.webp",
+            alt: `Потолок звездное небо - ${currentCity.name}`
+        },
+        {
+            id: 5,
+            image: "/img/work-5.webp",
+            alt: `Черный глянцевый потолок - ${currentCity.name}`
+        },
+        {
+            id: 6,
+            image: "/img/work-6.webp",
+            alt: `Фотопечать на потолке - ${currentCity.name}`
+        }
+    ];
+
     const carouselRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!carouselRef.current) return;
 
-        // ТОЧНО КАК В ОРИГИНАЛЕ atuin.ru
+        // Функция инициализации карусели
         function carousel(root: HTMLElement) {
             const figure = root.querySelector("figure") as HTMLElement;
             const nav = root.querySelector("nav") as HTMLElement;
             const images = figure.children;
             const n = images.length;
-            const gap = parseInt(root.dataset.gap || '0');
             const bfc = "bfc" in root.dataset;
             const theta = 2 * Math.PI / n;
             let currImage = 0;
 
             function setupCarousel(n: number, s: number) {
-                const apothem = s / (2 * Math.tan(Math.PI / n));
+                const apothem = (s / (2 * Math.tan(Math.PI / n))) * 0.6 + 25; // Уменьшаем радиус на 40% + добавляем 25px
                 figure.style.transformOrigin = `50% 50% ${-apothem}px`;
                 
                 for (let i = 0; i < n; i++) {
-                    (images[i] as HTMLElement).style.padding = `0 ${gap}px`;
-                }
-                
-                for (let i = 0; i < n; i++) {
+                    (images[i] as HTMLElement).style.padding = '0';
+                    (images[i] as HTMLElement).style.position = 'absolute';
+                    (images[i] as HTMLElement).style.left = '50%';
+                    (images[i] as HTMLElement).style.top = '50%';
                     (images[i] as HTMLElement).style.transformOrigin = `50% 50% ${-apothem}px`;
-                    (images[i] as HTMLElement).style.transform = `rotateY(${i * theta}rad)`;
+                    (images[i] as HTMLElement).style.transform = `translate(-50%, -50%) rotateY(${i * theta}rad) translateZ(${apothem}px)`;
                 }
                 
                 if (bfc) {
@@ -219,7 +201,7 @@ function Portfolio() {
                         Примеры наших <span className="portfolio__title-accent">работ</span>
                     </h2>
                     <p className="portfolio__subtitle">
-                        Более 1000 довольных клиентов по всему Ростову-на-Дону. 
+                        Более 1000 довольных клиентов по всему {currentCity.nameGenitive}. 
                         Каждый проект - это уникальное решение с гарантией качества.
                     </p>
 
@@ -266,12 +248,12 @@ function Portfolio() {
                 </div>
 
                 {/* Оригинальная 3D Карусель */}
-                <div className="carousel-3d" data-gap="0" ref={carouselRef}>
+                <div className="carousel-3d" ref={carouselRef}>
                     <figure>
                         {portfolioData.map((item) => (
                             <div key={item.id}>
                                 <a href="#any">
-                                    <img src={item.image} alt={item.alt} />
+                                    <img src={item.image} alt={item.alt} width="800" height="600" loading="lazy" />
                                 </a>
                             </div>
                         ))}
@@ -310,7 +292,7 @@ function Portfolio() {
                             </div>
                             <h4 className="portfolio__info-title">Быстрый монтаж</h4>
                             <p className="portfolio__info-text">
-                                Установка любой сложности за 1-3 дня без пыли и строительного мусора
+                                Установка любой сложности за 1–3 дня. Чистый монтаж, по желанию заказчика — укрытие стен плёнкой
                             </p>
                         </div>
 

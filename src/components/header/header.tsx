@@ -2,34 +2,18 @@
 import './header.scss';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
+import { useCity } from '../../contexts/CityContext';
+import CitySelector from '../CitySelector/CitySelector';
+import { cities } from '../../lib/cities';
+
 
 function Header() {
-    const [isStuck, setIsStuck] = useState(false);
+    const { currentCity, setCurrentCity } = useCity();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isContactsOpen, setIsContactsOpen] = useState(false);
+    const [isMobileCityOpen, setIsMobileCityOpen] = useState(false);
+
     const topRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(() => {
-        let ticking = false;
-
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.scrollY > 8;
-                    setIsStuck(prev => (prev !== scrolled ? scrolled : prev));
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        // Initialize state based on initial scroll
-        handleScroll();
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     useEffect(() => {
         const updateTopHeightVar = () => {
@@ -50,12 +34,19 @@ function Header() {
         };
     }, []);
 
+    // Закрываем мобильное меню при изменении города
+    const handleCitySelect = (city: typeof cities[0]) => {
+        setCurrentCity(city);
+        setIsMobileCityOpen(false);
+        setIsMobileMenuOpen(false);
+    };
+
     return (
-        <header className={`header ${isStuck ? 'header--stuck' : ''}`}>
+        <header className="header">
             <div ref={topRef} className="header__top-fixed">
                 <div className="container container-header">
                     <div className="header__top">
-                    <Link href="/" className="header__top-logo">
+                    <Link href={`/${currentCity.slug}`} className="header__top-logo">
                         <svg width="160" height="28" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                             {/* Изысканные волны */}
                             <path d="M1 20 Q11 10 19 15 T37 13 T49 17" stroke="url(#waveGradient)" strokeWidth="2.2" fill="none"/>
@@ -131,68 +122,176 @@ function Header() {
                     <nav className='header__top-nav'>
                         <ul className="header__top-menu">
                             <li className="header__top-item">
-                                <Link href="/about" className="header__top-link">
-                                    О компании
+                                <Link href={`/${currentCity.slug}`} className="header__top-link">
+                                    Главная
                                 </Link>
                             </li>
                             <li className="header__top-item">
-                                <Link href="/services" className="header__top-link">
+                                <Link href={`/${currentCity.slug}/catalog`} className="header__top-link">
+                                    Каталог
+                                </Link>
+                            </li>
+                            <li className="header__top-item">
+                                <Link href={`/${currentCity.slug}/services`} className="header__top-link">
                                     Услуги
                                 </Link>
                             </li>
                             <li className="header__top-item">
-                                <Link href="/calculator" className="header__top-link">
+                                <Link href={`/${currentCity.slug}/calculator`} className="header__top-link">
                                     Калькулятор цен
                                 </Link>
                             </li>
-                            <li className="header__top-item">
-                                <a href="!#" className="header__top-link">
+                            <li
+                                className="header__top-item header__top-item--dropdown"
+                                onMouseEnter={() => setIsContactsOpen(true)}
+                                onMouseLeave={() => setIsContactsOpen(false)}
+                            >
+                                <button
+                                    type="button"
+                                    className="header__top-link header__top-link--dropdown"
+                                    aria-haspopup="menu"
+                                    aria-expanded={isContactsOpen}
+                                >
                                     Контакты
-                                </a>
-                            </li>
-                            <li className="header__top-item header__top-item--extra">
-                                <a href="!#" className="header__top-link">
-                                    Наши работы
-                                </a>
-                            </li>
-                            <li className="header__top-item header__top-item--extra">
-                                <a href="!#" className="header__top-link">
-                                    Отзывы
-                                </a>
-                            </li>
-                            <li className="header__top-item header__top-item--extra">
-                                <a href="!#" className="header__top-link">
-                                    Позвонить
-                                </a>
+                                    <span className={`caret ${isContactsOpen ? 'is-open' : ''}`} aria-hidden>▾</span>
+                                </button>
+                                <ul className={`header__dropdown ${isContactsOpen ? 'is-open' : ''}`} role="menu">
+                                    <li role="none"><a role="menuitem" href="tel:+79180000000">📞 Позвонить</a></li>
+                                    <li role="none"><a role="menuitem" href="https://wa.me/79180000000" target="_blank" rel="noopener noreferrer">🟢 WhatsApp</a></li>
+                                    <li role="none"><a role="menuitem" href="https://t.me/your_channel" target="_blank" rel="noopener noreferrer">🔵 Telegram</a></li>
+                                    <li role="none"><a role="menuitem" href="mailto:info@example.com">✉️ Email</a></li>
+                                    <li role="none"><a role="menuitem" href="https://yandex.ru/maps" target="_blank" rel="noopener noreferrer">📍 Адрес на карте</a></li>
+                                    <li role="none"><a role="menuitem" href="#callback">📥 Заказать звонок</a></li>
+                                </ul>
                             </li>
                         </ul>
+                        <ul className='header__top-menu header__top-menu--bottom'>
+                            <li className="header__top-item">
+                                <Link href={`/${currentCity.slug}/works`} className="header__top-link">
+                                    Наши работы
+                                </Link>
+                            </li>
+                            <li className="header__top-item">
+                                <Link href={`/${currentCity.slug}/reviews`} className="header__top-link">
+                                    Отзывы
+                                </Link>
+                            </li>
+                                                         <li className="header__top-item">
+                                 <Link href={`/${currentCity.slug}/about`} className="header__top-link">
+                                     О компании
+                                 </Link>
+                             </li>
+                                                         <li className="header__top-item">
+                                 <Link href={`/${currentCity.slug}/faq`} className="header__top-link">
+                                     Частые вопросы
+                                 </Link>
+                             </li>
+                        </ul>
                     </nav>
-                    <p className="header__top-geo">
-                    📍 Ростов-на-Дону и область
-                    </p>
-                    <button
-                        className={`header__burger ${isMobileMenuOpen ? 'is-open' : ''}`}
-                        aria-label="Открыть меню"
-                        aria-expanded={isMobileMenuOpen}
-                        onClick={() => setIsMobileMenuOpen(v => !v)}
-                    >
-                        <span />
-                        <span />
-                        <span />
-                    </button>
+                    <div className="header__top-right">
+                        {!isMobileMenuOpen && <CitySelector />}
+                        <button
+                            className={`header__burger ${isMobileMenuOpen ? 'is-open' : ''}`}
+                            aria-label="Открыть меню"
+                            aria-expanded={isMobileMenuOpen}
+                            onClick={() => setIsMobileMenuOpen(v => !v)}
+                        >
+                            <span />
+                            <span />
+                            <span />
+                        </button>
+                    </div>
                     </div>
                 </div>
             </div>
             {/* Mobile menu */}
             <div className={`header__mobile ${isMobileMenuOpen ? 'is-open' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
                 <div className="header__mobile-panel" onClick={(e) => e.stopPropagation()}>
+                    {/* Город и телефон в мобильном меню */}
+                    <div className="header__mobile-header">
+                        <div className="header__mobile-city">
+                            <button
+                                className="header__mobile-city-button"
+                                onClick={() => setIsMobileCityOpen(!isMobileCityOpen)}
+                                aria-expanded={isMobileCityOpen}
+                            >
+                                <span className="header__mobile-city-icon">📍</span>
+                                <span className="header__mobile-city-name">{currentCity.name}</span>
+                                <span className={`header__mobile-city-arrow ${isMobileCityOpen ? 'is-open' : ''}`}>▾</span>
+                            </button>
+                            
+                            {isMobileCityOpen && (
+                                <div className="header__mobile-city-dropdown">
+                                    <div className="header__mobile-city-section">
+                                        <h4 className="header__mobile-city-section-title">Основные города</h4>
+                                        <ul className="header__mobile-city-list">
+                                            {cities.filter(city => city.isMain).map((city) => (
+                                                <li key={city.id}>
+                                                    <button
+                                                        className={`header__mobile-city-option ${currentCity.id === city.id ? 'is-active' : ''}`}
+                                                        onClick={() => handleCitySelect(city)}
+                                                    >
+                                                        {city.name}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className="header__mobile-city-section">
+                                        <h4 className="header__mobile-city-section-title">Окрестности Батайска</h4>
+                                        <ul className="header__mobile-city-list">
+                                            {cities.filter(city => !city.isMain && !city.isDistant).map((city) => (
+                                                <li key={city.id}>
+                                                    <button
+                                                        className={`header__mobile-city-option ${currentCity.id === city.id ? 'is-active' : ''}`}
+                                                        onClick={() => handleCitySelect(city)}
+                                                    >
+                                                        {city.name}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className="header__mobile-city-section">
+                                        <h4 className="header__mobile-city-section-title">Дальние города</h4>
+                                        <p className="header__mobile-city-note">
+                                            Работаем при заказах от 200,000₽
+                                        </p>
+                                        <ul className="header__mobile-city-list">
+                                            <li>
+                                                <Link 
+                                                    href="/distant-cities" 
+                                                    className="header__mobile-city-option header__mobile-city-option--link"
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                >
+                                                    Таганрог, Шахты, Азов и др.
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        
+                        <div className="header__mobile-phone">
+                            <a href="tel:+79180000000" className="header__mobile-phone-link">
+                                <span className="header__mobile-phone-icon">📞</span>
+                                <span className="header__mobile-phone-number">+7 (918) 000-00-00</span>
+                            </a>
+                            <span className="header__mobile-phone-note">Бесплатная консультация</span>
+                        </div>
+                    </div>
+                    
                     <ul className="header__mobile-list">
-                        <li><Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>О компании</Link></li>
-                        <li><Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>Услуги</Link></li>
-                        <li><Link href="/calculator" onClick={() => setIsMobileMenuOpen(false)}>Калькулятор цен</Link></li>
+                        <li><Link href={`/${currentCity.slug}`} onClick={() => setIsMobileMenuOpen(false)}>Главная</Link></li>
+                        <li><Link href={`/${currentCity.slug}/catalog`} onClick={() => setIsMobileMenuOpen(false)}>Каталог</Link></li>
+                        <li><Link href={`/${currentCity.slug}/services`} onClick={() => setIsMobileMenuOpen(false)}>Услуги</Link></li>
+                        <li><Link href={`/${currentCity.slug}/calculator`} onClick={() => setIsMobileMenuOpen(false)}>Калькулятор цен</Link></li>
                         <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Контакты</a></li>
-                        <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Наши работы</a></li>
-                        <li><a href="!#" onClick={() => setIsMobileMenuOpen(false)}>Отзывы</a></li>
+                        <li><Link href={`/${currentCity.slug}/works`} onClick={() => setIsMobileMenuOpen(false)}>Наши работы</Link></li>
+                        <li><Link href={`/${currentCity.slug}/reviews`} onClick={() => setIsMobileMenuOpen(false)}>Отзывы</Link></li>
                         <li><a href="tel:+79180000000" className="header__mobile-call" onClick={() => setIsMobileMenuOpen(false)}>Позвонить</a></li>
                     </ul>
                 </div>
@@ -215,19 +314,19 @@ function Header() {
                             <p className="header__bottom-text">ДОВОЛЬНЫХ КЛИЕНТОВ</p>
                         </div>
                         <div className="header__bottom-wrapper">
-                            <p className="header__bottom-title">15 лет</p>
+                            <p className="header__bottom-title">19 лет</p>
                             <p className="header__bottom-text">НА РЫНКЕ</p>
                         </div>
                         <div className="header__bottom-wrapper">
-                            <p className="header__bottom-title">3 года</p>
+                            <p className="header__bottom-title">15 лет</p>
                             <p className="header__bottom-text">ГАРАНТИЯ</p>
                         </div>
                     </div>
-                    <div className="header__bottom-right">
-                        <div className="header__bottom-boxe">
-                            <a href="!#" className="header__bottom-link header__bottom-link--bg">📷 Примеры работ</a>
-                            <a href="!#" className="header__bottom-link header__bottom-link--border">⭐ Отзывы клиентов</a>
-                        </div>
+                                         <div className="header__bottom-right">
+                         <div className="header__bottom-boxe">
+                             <Link href={`/${currentCity.slug}/works`} className="header__bottom-link header__bottom-link--bg">📷 Примеры работ</Link>
+                             <Link href={`/${currentCity.slug}/reviews`} className="header__bottom-link header__bottom-link--border">⭐ Отзывы клиентов</Link>
+                         </div>
                         <div className="header__bottom-boxe">
                             <p className="header__bottom-info">
                             ✅ Гарантия качества

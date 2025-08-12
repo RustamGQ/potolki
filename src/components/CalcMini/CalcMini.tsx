@@ -7,11 +7,11 @@ type CeilingType = 'matte' | 'glossy' | 'printed';
 type LightingType = 'led' | 'spot' | 'chandelier';
 
 const PRICING = {
-  baseRatePerM2: 400, // Измени позже под свои цены
+  baseRatePerM2: 405, // Базовая цена матового потолка BAUF 205 (175 + 230)
   ceilingMultiplier: {
-    matte: 1,
-    glossy: 1.15,
-    printed: 1.3,
+    matte: 1, // 405₽/м²
+    glossy: 1.025, // 415₽/м² (185 + 230)
+    printed: 1.11, // 450₽/м² (220 + 230)
   } as Record<CeilingType, number>,
   lightingAdd: {
     led: 3000,
@@ -36,7 +36,8 @@ export default function CalcMini() {
   const estimatedPrice = React.useMemo(() => {
     const base = area * PRICING.baseRatePerM2 * PRICING.ceilingMultiplier[ceilingType];
     const total = base + PRICING.lightingAdd[lighting];
-    return Math.round(total / 100) * 100;
+    const calculatedPrice = Math.round(total / 100) * 100;
+    return Math.max(calculatedPrice, 7500); // Минимальная цена 7500₽
   }, [area, ceilingType, lighting]);
 
   const formatRub = (v: number) => new Intl.NumberFormat('ru-RU').format(v);

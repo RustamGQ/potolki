@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Roboto } from 'next/font/google';
-import Header from "../components/header/header";
+import DynamicHeader from "../components/header/DynamicHeader";
+import JsonLdWrapper from "../components/JsonLd/JsonLdWrapper";
+import CityProvider from "../contexts/CityContext";
 import "./globals.scss";
 
 const inter = Inter({
@@ -18,8 +20,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Натяжные потолки в Ростове-на-Дону",
-  description: "Профессиональная установка натяжных потолков",
+  title: "Натяжные потолки в Ростове-на-Дону - Установка от 405₽/м² | ПОТОЛКИ",
+  description: "Натяжные потолки в Ростове-на-Дону от профессионалов. Бесплатный замер, монтаж за 1 день, гарантия 15 лет. Цены от 405₽/м². Звоните!",
+  keywords: "натяжные потолки ростов, потолки ростов, установка потолков ростов, натяжные потолки батайск, потолки аксай, цены на потолки",
 };
 
 export default function RootLayout({
@@ -30,8 +33,11 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${roboto.variable}`}>
       <body className={inter.className}>
-        <Header />
-        {children}
+        <CityProvider>
+          <JsonLdWrapper />
+          <DynamicHeader />
+          {children}
+        </CityProvider>
       </body>
     </html>
   );

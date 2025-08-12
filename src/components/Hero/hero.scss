@@ -1017,27 +1017,126 @@
 }
 
 // Responsive
+@media (max-width: 1400px) {
+    .hero {
+        &__main-content {
+            grid-template-columns: 1fr 480px;
+            gap: rem(50px);
+        }
+        
+        &__title-line {
+            font-size: rem(64px);
+        }
+        
+        &__metrics {
+            grid-template-columns: repeat(3, 1fr);
+            gap: rem(20px);
+        }
+        
+        &__advantages {
+            grid-template-columns: repeat(4, 1fr);
+            gap: rem(20px);
+        }
+    }
+}
+
 @media (max-width: 1200px) {
     .hero {
+        padding: rem(100px) 0 rem(70px);
+        
         &__main-content {
             grid-template-columns: 1fr 450px;
             gap: rem(40px);
         }
         
         &__title-line {
-            font-size: rem(60px);
+            font-size: rem(56px);
+            letter-spacing: -2px;
+        }
+        
+        &__title-sub {
+            font-size: rem(22px);
         }
         
         &__metrics {
             grid-template-columns: repeat(3, 1fr);
             gap: rem(16px);
         }
+        
+        &__metric-card {
+            padding: rem(20px);
+        }
+        
+        &__metric-number {
+            font-size: rem(24px);
+        }
+        
+        &__advantages {
+            grid-template-columns: repeat(4, 1fr);
+            gap: rem(16px);
+        }
+        
+        &__advantage {
+            padding: rem(16px);
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        padding: rem(80px) 0 rem(60px);
+        
+        &__main-content {
+            grid-template-columns: 1fr 400px;
+            gap: rem(35px);
+        }
+        
+        &__title-line {
+            font-size: rem(48px);
+            letter-spacing: -1.5px;
+        }
+        
+        &__title-sub {
+            font-size: rem(20px);
+        }
+        
+        &__metrics {
+            grid-template-columns: repeat(3, 1fr);
+            gap: rem(14px);
+        }
+        
+        &__metric-card {
+            padding: rem(18px);
+        }
+        
+        &__metric-number {
+            font-size: rem(22px);
+        }
+        
+        &__metric-label {
+            font-size: rem(13px);
+        }
+        
+        &__advantages {
+            grid-template-columns: repeat(2, 1fr);
+            gap: rem(16px);
+        }
+        
+        &__advantage {
+            padding: rem(16px);
+        }
+        
+        &__advantage-icon {
+            font-size: rem(24px);
+            width: 45px;
+            height: 45px;
+        }
     }
 }
 
 @media (max-width: 968px) {
     .hero {
-        padding: rem(80px) 0 rem(60px);
+        padding: rem(70px) 0 rem(50px);
         
         &__main-content {
             grid-template-columns: 1fr;
@@ -1045,12 +1144,25 @@
         }
         
         &__title-line {
-            font-size: rem(48px);
+            font-size: rem(44px);
+            letter-spacing: -1px;
+        }
+        
+        &__title-sub {
+            font-size: rem(18px);
         }
         
         &__metrics {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: rem(16px);
+        }
+        
+        &__metric-card {
+            padding: rem(20px);
+        }
+        
+        &__metric-number {
+            font-size: rem(24px);
         }
         
         &__advantages {
@@ -1060,34 +1172,284 @@
         
         &__cta-buttons {
             flex-direction: column;
+            gap: rem(12px);
+        }
+        
+        &__btn {
+            padding: rem(16px) rem(24px);
+            font-size: rem(15px);
         }
         
         &__right {
             position: static;
+        }
+        
+        &__simulator {
+            padding: rem(24px);
+        }
+        
+        &__sim-title {
+            font-size: rem(20px);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: rem(60px) 0 rem(40px);
+        
+        &__title-line {
+            font-size: rem(36px);
+            letter-spacing: -0.5px;
+        }
+        
+        &__title-sub {
+            font-size: rem(16px);
+        }
+        
+        &__metrics {
+            grid-template-columns: 1fr;
+            gap: rem(12px);
+        }
+        
+        &__metric-card {
+            padding: rem(16px);
+        }
+        
+        &__metric-number {
+            font-size: rem(20px);
+        }
+        
+        &__metric-label {
+            font-size: rem(12px);
+        }
+        
+        &__advantages {
+            grid-template-columns: 1fr;
+            gap: rem(12px);
+        }
+        
+        &__advantage {
+            padding: rem(14px);
+        }
+        
+        &__advantage-icon {
+            font-size: rem(20px);
+            width: 40px;
+            height: 40px;
+        }
+        
+        &__value-prop {
+            padding: rem(16px);
+            gap: rem(16px);
+        }
+        
+        &__prop-content h3 {
+            font-size: rem(18px);
+        }
+        
+        &__prop-content p {
+            font-size: rem(14px);
+        }
+        
+        &__simulator {
+            padding: rem(20px);
+        }
+        
+        &__sim-title {
+            font-size: rem(18px);
+        }
+        
+        &__sim-controls {
+            flex-direction: column;
+            gap: rem(6px);
+        }
+        
+        &__sim-btn {
+            padding: rem(8px) rem(12px);
+            font-size: rem(13px);
+        }
+        
+        &__option-pills {
+            flex-wrap: wrap;
+            gap: rem(6px);
+        }
+        
+        &__pill {
+            padding: rem(6px) rem(12px);
+            font-size: rem(13px);
         }
     }
 }
 
 @media (max-width: 640px) {
     .hero {
+        padding: rem(50px) 0 rem(30px);
+        
         &__title-line {
-            font-size: rem(36px);
+            font-size: rem(32px);
+            letter-spacing: 0;
         }
         
-        &__advantages {
-            grid-template-columns: 1fr;
+        &__title-sub {
+            font-size: rem(15px);
         }
         
-        &__sim-controls {
-            flex-direction: column;
+        &__badge-group {
+            gap: rem(8px);
         }
         
-        &__option-pills {
-            flex-wrap: wrap;
+        &__badge {
+            padding: rem(6px) rem(12px);
+            font-size: rem(12px);
+        }
+        
+        &__value-prop {
+            padding: rem(12px);
+            gap: rem(12px);
+        }
+        
+        &__prop-number {
+            width: 35px;
+            height: 35px;
+            font-size: rem(16px);
+        }
+        
+        &__prop-content h3 {
+            font-size: rem(16px);
+        }
+        
+        &__prop-content p {
+            font-size: rem(13px);
+        }
+        
+        &__btn {
+            padding: rem(14px) rem(20px);
+            font-size: rem(14px);
+        }
+        
+        &__contact-card {
+            padding: rem(16px);
+            gap: rem(12px);
+        }
+        
+        &__avatar-img {
+            width: 45px;
+            height: 45px;
+            font-size: rem(20px);
+        }
+        
+        &__contact-name {
+            font-size: rem(14px);
+        }
+        
+        &__contact-role {
+            font-size: rem(12px);
+        }
+        
+        &__contact-phone {
+            font-size: rem(14px);
         }
         
         &__simulator {
-            padding: rem(20px);
+            padding: rem(16px);
+        }
+        
+        &__sim-title {
+            font-size: rem(16px);
+        }
+        
+        &__sim-viewport {
+            height: 280px;
+        }
+        
+        &__option-label {
+            font-size: rem(13px);
+        }
+        
+        &__pill {
+            padding: rem(5px) rem(10px);
+            font-size: rem(12px);
+        }
+        
+        &__color {
+            width: 28px;
+            height: 28px;
+        }
+        
+        &__sim-cta {
+            padding: rem(14px);
+            font-size: rem(14px);
+        }
+        
+        &__sim-price {
+            font-size: rem(16px);
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: rem(40px) 0 rem(25px);
+        
+        &__title-line {
+            font-size: rem(28px);
+        }
+        
+        &__title-sub {
+            font-size: rem(14px);
+        }
+        
+        &__metric-card {
+            padding: rem(14px);
+        }
+        
+        &__metric-number {
+            font-size: rem(18px);
+        }
+        
+        &__metric-label {
+            font-size: rem(11px);
+        }
+        
+        &__advantage {
+            padding: rem(12px);
+        }
+        
+        &__advantage-icon {
+            font-size: rem(18px);
+            width: 35px;
+            height: 35px;
+        }
+        
+        &__advantage-text strong {
+            font-size: rem(14px);
+        }
+        
+        &__advantage-text span {
+            font-size: rem(12px);
+        }
+        
+        &__btn {
+            padding: rem(12px) rem(16px);
+            font-size: rem(13px);
+        }
+        
+        &__simulator {
+            padding: rem(12px);
+        }
+        
+        &__sim-viewport {
+            height: 240px;
+        }
+        
+        &__sim-cta {
+            padding: rem(12px);
+            font-size: rem(13px);
+        }
+        
+        &__sim-price {
+            font-size: rem(14px);
         }
     }
 }

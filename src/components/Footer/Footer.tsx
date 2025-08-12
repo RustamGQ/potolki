@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import './footer.scss';
 
 function Footer() {
@@ -318,9 +319,9 @@ function Footer() {
                                 © {currentYear} Натяжные потолки Ростов-на-Дону. Все права защищены.
                             </p>
                             <nav className="footer__legal">
-                                <a href="/privacy" className="footer__legal-link">Политика конфиденциальности</a>
-                                <a href="/terms" className="footer__legal-link">Пользовательское соглашение</a>
-                                <a href="/sitemap.xml" className="footer__legal-link">Карта сайта</a>
+                                <Link href="/privacy" className="footer__legal-link">Политика конфиденциальности</Link>
+                                <Link href="/terms" className="footer__legal-link">Пользовательское соглашение</Link>
+                                <Link href="/sitemap.xml" className="footer__legal-link">Карта сайта</Link>
                             </nav>
                         </div>
                         <div className="footer__bottom-right">

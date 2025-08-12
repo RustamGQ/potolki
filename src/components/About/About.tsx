@@ -1,6 +1,10 @@
+"use client";
+
 import './about.scss';
+import { useCity } from '../../contexts/CityContext';
 
 function About() {
+    const { currentCity } = useCity();
     return (
         <section className="about" id="about">
             {/* Декоративный фон */}
@@ -29,7 +33,7 @@ function About() {
                         </h2>
                         <p className="about__subtitle">
                             Мы — команда профессионалов с многолетним опытом в сфере натяжных потолков. 
-                            Наша миссия — создавать идеальные интерьеры для каждого дома в Ростове-на-Дону.
+                            Наша миссия — создавать идеальные интерьеры для каждого дома в {currentCity.name}.
                         </p>
                     </div>
 
@@ -113,6 +117,8 @@ function About() {
                                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" 
                                                 alt="Алексей Иванов - Руководитель проектов"
                                                 loading="lazy"
+                                                width="150"
+                                                height="150"
                                             />
                                         </div>
                                         <div className="about__member-info">
@@ -126,6 +132,8 @@ function About() {
                                                 src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=150&h=150&fit=crop&crop=face" 
                                                 alt="Дмитрий Петров - Ведущий монтажник"
                                                 loading="lazy"
+                                                width="150"
+                                                height="150"
                                             />
                                         </div>
                                         <div className="about__member-info">
@@ -139,6 +147,8 @@ function About() {
                                                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
                                                 alt="Сергей Сидоров - Дизайнер"
                                                 loading="lazy"
+                                                width="150"
+                                                height="150"
                                             />
                                         </div>
                                         <div className="about__member-info">
@@ -152,6 +162,8 @@ function About() {
                                                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face" 
                                                 alt="Михаил Козлов - Мастер-монтажник"
                                                 loading="lazy"
+                                                width="150"
+                                                height="150"
                                             />
                                         </div>
                                         <div className="about__member-info">
